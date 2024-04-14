@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign-up Form</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  input,
+  select {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sign-up Form</h1>
+    <form id="signupForm" onsubmit="return validateForm()">
+      <label for="education">Educational Qualification:</label>
+      <select id="education" name="education">
+        <option value="highschool">High School</option>
+        <option value="diploma">Diploma</option>
+        <option value="bachelors">Bachelor's Degree</option>
+        <option value="masters">Master's Degree</option>
+        <option value="phd">Ph.D.</option>
+      </select>
+
+      <label for="phone">Phone Number:</label>
+      <input type="text" id="phone" name="phone" pattern="[6-9]{1}[0-9]{9}" placeholder="Enter Indian mobile number">
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" min="18" max="100">
+
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email">
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword">
+
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name">
+
+      <label for="city">City:</label>
+      <input type="text" id="city" name="city">
+
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <div id="errorContainer"></div>
+  </div>
+
+  <script>
+    function validateForm() {
+      const education = document.getElementById('education').value;
+      const phone = document.getElementById('phone').value;
+      const age = document.getElementById('age').value;
+      const gender = document.getElementById('gender').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const name = document.getElementById('name').value;
+      const city = document.getElementById('city').value;
+
+      const errorContainer = document.getElementById('errorContainer');
+      errorContainer.innerHTML = '';
+
+      let isValid = true;
+
+      // Validate phone number format
+      const phonePattern = /^[6-9]{1}[0-9]{9}$/;
+      if (!phonePattern.test(phone)) {
+        errorContainer.innerHTML += '<p class="error">Please enter a valid Indian mobile number.</p>';
+        isValid = false;
+      }
+
+      // Validate email format
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        errorContainer.innerHTML += '<p class="error">Please enter a valid email address.</p>';
+        isValid = false;
+      }
+
+      // Confirm password match
+      if (password !== confirmPassword) {
+        errorContainer.innerHTML += '<p class="error">Passwords do not match.</p>';
+        isValid = false;
+      }
+
+      if (isValid) {
+        // Submit the form or perform other actions
+        return true;
+      } else {
+        // Prevent form submission
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>

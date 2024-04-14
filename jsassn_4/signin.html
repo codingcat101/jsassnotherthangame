@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign-in Form</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Sign-in</h1>
+    <form id="signInForm">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email">
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+
+      <div id="errorContainer" class="error"></div>
+
+      <button type="button" onclick="signIn()">Sign In</button>
+    </form>
+  </div>
+
+  <script>
+    function signIn() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const errorContainer = document.getElementById('errorContainer');
+      errorContainer.innerHTML = '';
+
+      let isValid = true;
+
+      // Validate email format
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        errorContainer.innerHTML = 'Please enter a valid email address.';
+        isValid = false;
+        return;
+      }
+
+      // Validate password (you can add more checks if needed)
+
+      if (isValid) {
+        // Fetch API POST request
+        fetch('https://reqres.in/api/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok.');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Handle successful response
+          console.log('Success:', data);
+          // Redirect or display a success message
+        })
+        .catch(error => {
+          // Handle errors
+          console.error('Error:', error.message);
+          errorContainer.innerHTML = 'An error occurred. Please try again.';
+        });
+      }
+    }
+
+    // Allow Enter key to submit the form
+    document.addEventListener('keypress', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        signIn();
+      }
+    });
+  </script>
+</body>
+</html>
