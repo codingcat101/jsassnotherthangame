@@ -5,69 +5,86 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sign-up Form</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #eff5f3; 
     margin: 0;
     padding: 0;
-  }
+}
 
-  .container {
-    max-width: 500px;
+.container {
+    max-width: 1000px;
     margin: 50px auto;
     padding: 30px;
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+}
 
-  h1 {
+h1 {
     text-align: center;
     margin-bottom: 20px;
-  }
+    color: #4a8059;
+}
 
-  label {
+label {
     display: block;
     margin-bottom: 8px;
-  }
+    color: #4a8059; 
+}
 
-  input,
-  select {
-    width: 95%;
-    padding: 10px;
+input,
+select {
+    width: calc(100% - 22px);
+    padding: 12px;
     margin-bottom: 20px;
     border-radius: 5px;
-    border: 1px solid #ccc;
-  }
+    border: 1px solid #c1e2d6; 
+    background-color: #e8f8f3; 
+    color: #4a8059; 
+}
 
-  .error {
+.error {
     color: red;
     font-size: 14px;
     margin-top: 5px;
-  }
+}
 
-  button {
+button {
     display: block;
     width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: #fff;
+    padding: 12px;
+    background-color: #4a8059; 
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+    transition: background-color 0.3s ease;
+}
 
-  button:hover {
-    background-color: #45a049;
-  }
+button:hover {
+    background-color: #3b6b4d; 
+}
+
+.container:hover {
+    box-shadow: 0 0 20px rgba(3, 51, 146, 0.324);
+}
+
+@media screen and (max-width: 600px) {
+    input,
+    select {
+        width: 100%;
+    }
+}
 </style>
 </head>
 <body>
+
   <div class="container">
-    <h1>Sign-up Form</h1>
-    <form id="signupForm" onsubmit="return validateForm()">
-      <label for="education">Educational Qualification:</label>
-      <select id="education" name="education">
+    <h1>Sign-up Form-New</h1>
+    <form id="signup_form" onsubmit="return validateForm()">
+      <label for="edu">Educational Qualification:</label>
+      <select id="edu" name="edu">
         <option value="highschool">High School</option>
         <option value="diploma">Diploma</option>
         <option value="bachelors">Bachelor's Degree</option>
@@ -76,11 +93,10 @@
       </select>
 
       <label for="phone">Phone Number:</label>
-      <input type="text" id="phone" name="phone" pattern="[6-9]{1}[0-9]{9}" placeholder="Enter Indian mobile number">
-
+      <input type="text" id="phone" name="phone" pattern="\d{3}[-.]?\d{3}[-.]?\d{4}
+      " placeholder="Enter Indian mobile number">
       <label for="age">Age:</label>
-      <input type="number" id="age" name="age" min="18" max="100">
-
+      <input type="number" id="age" name="age" min="1" max="150">
       <label for="gender">Gender:</label>
       <select id="gender" name="gender">
         <option value="male">Male</option>
@@ -94,8 +110,8 @@
       <label for="password">Password:</label>
       <input type="password" id="password" name="password">
 
-      <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword">
+      <label for="confirm_password">Confirm Password:</label>
+      <input type="password" id="confirm_password" name="confirm_password">
 
       <label for="name">Name:</label>
       <input type="text" id="name" name="name">
@@ -106,51 +122,51 @@
       <button type="submit">Sign Up</button>
     </form>
 
-    <div id="errorContainer"></div>
+    <div id="error_check"></div>
   </div>
 
   <script>
     function validateForm() {
-      const education = document.getElementById('education').value;
+      const edu = document.getElementById('edu').value;
       const phone = document.getElementById('phone').value;
       const age = document.getElementById('age').value;
       const gender = document.getElementById('gender').value;
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
+      const confirm_password = document.getElementById('confirm_password').value;
       const name = document.getElementById('name').value;
       const city = document.getElementById('city').value;
 
-      const errorContainer = document.getElementById('errorContainer');
-      errorContainer.innerHTML = '';
+      const error_check = document.getElementById('error_check');
+      error_check.innerHTML = '';
 
       let isValid = true;
 
-      // Validate phone number format
-      const phonePattern = /^[6-9]{1}[0-9]{9}$/;
-      if (!phonePattern.test(phone)) {
-        errorContainer.innerHTML += '<p class="error">Please enter a valid Indian mobile number.</p>';
+      
+      const phregpat = /^\d{3}[-.]?\d{3}[-.]?\d{4}$/;
+ if (!phregpat.test(phone)) {
+  error_check.innerHTML += '<p class="error">please enter a valid Indian mobile number.</p>';
         isValid = false;
       }
 
-      // Validate email format
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(email)) {
-        errorContainer.innerHTML += '<p class="error">Please enter a valid email address.</p>';
+     
+      const emailregpat= /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailregpat.test(email)) {
+        error_check.innerHTML += '<p class="error">please enter a valid email address!</p>';
         isValid = false;
       }
 
-      // Confirm password match
+      
       if (password !== confirmPassword) {
-        errorContainer.innerHTML += '<p class="error">Passwords do not match.</p>';
+        error_check.innerHTML += '<p class="error">Ohno,passwords dont match.</p>';
         isValid = false;
       }
 
       if (isValid) {
-        // Submit the form or perform other actions
+       
         return true;
       } else {
-        // Prevent form submission
+     
         return false;
       }
     }
